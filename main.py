@@ -11,7 +11,7 @@ def window():
     windows.move(200, 200)
 
     windows.setWindowTitle('Passwortgenerator')
-    windows.setWindowIcon(QtGui.QIcon('weihnaxfeierliebe.png'))
+    windows.setWindowIcon(QtGui.QIcon('generator.jpeg'))
 
     layout = QHBoxLayout()
     button = QPushButton("Klick mich!")

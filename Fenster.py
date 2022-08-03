@@ -39,12 +39,12 @@ class Fenster(QWidget):
         textbox_safe = QLineEdit(self)
         textbox_safe.setGeometry(300, 280, 150, 20)
 
-        self.checkbox_custom = QCheckBox(self)
-        self.checkbox_custom.setGeometry(230, 280, 120, 25)
-        self.checkbox_custom.stateChanged.connect(self.custom)
+        checkbox_custom = QCheckBox(self)
+        checkbox_custom.setGeometry(230, 280, 120, 25)
+        checkbox_custom.stateChanged.connect(self.custom)
 
-        self.label_checkbox = QLabel("Custom", self)
-        self.label_checkbox.move(220, 310)
+        label_checkbox = QLabel("Custom", self)
+        label_checkbox.move(220, 310)
 
         self.checkbox_upper_lower = QCheckBox(self)
         self.checkbox_upper_lower.setGeometry(80, 340, 100, 25)

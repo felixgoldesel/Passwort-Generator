@@ -5,10 +5,13 @@ class EncodeDecode(QWidget):
     def __init__(self):
         super().__init__()
 
-        menu = QComboBox(self)
-        menu.setGeometry(50, 20, 150, 25)
-        menu.addItem("MD5")
-        menu.addItem("kp")
+        self.menu = QComboBox(self)
+        self.menu.setGeometry(50, 20, 150, 25)
+        self.menu.addItem("---")
+        self.menu.addItem("Base64")
+        self.menu.addItem("kp")
+
+        self.menu.currentIndexChanged.connect(self.coding)
 
         encode = QLabel("Verschlüsseln", self)
         encode.setGeometry(50, 50, 100, 25)
@@ -27,3 +30,7 @@ class EncodeDecode(QWidget):
 
         self.decode_button = QPushButton("Entschlüsseln", self)
         self.decode_button.setGeometry(350, 390, 100, 25)
+
+    def coding(self):
+        if self.menu.currentText() == "Base64":
+            print("base64")

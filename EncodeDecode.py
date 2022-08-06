@@ -1,3 +1,5 @@
+import string
+
 from PyQt5.QtWidgets import QWidget, QLabel, QTextEdit, QComboBox, QPushButton
 
 
@@ -38,6 +40,7 @@ class EncodeDecode(QWidget):
 
         self.decode_button = QPushButton("Entschlüsseln", self)
         self.decode_button.setGeometry(350, 390, 100, 25)
+        self.decode_button.clicked.connect(self.decode_text)
 
     def coding(self):
         if self.menu.currentText() == "Run Length Encoding":
@@ -58,4 +61,20 @@ class EncodeDecode(QWidget):
                     counter += 1
             self.decode_textbox.setPlainText(result)
 
+    def decode_text(self):
+        if self.menu.currentText() == "Run Length Encoding":
+            text = self.decode_textbox.toPlainText() + '!'
+            x = 1
+            number = ''
+            result = ''
+            for i in range(len(text)):
+
+                if text[i].isdigit() is False and text[i] != '!':
+                    while text[i+x].isdigit():
+                        number += text[i+x]
+                        x += 1
+                    x = 1
+                    result += text[i] * int(number)
+                    number = ''
+            self.encode_textbox.setPlainText(result)
 

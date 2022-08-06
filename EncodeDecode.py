@@ -63,13 +63,12 @@ class EncodeDecode(QWidget):
 
     def decode_text(self):
         if self.menu.currentText() == "Run Length Encoding":
-            text = self.decode_textbox.toPlainText() + '!'
+            text = self.decode_textbox.toPlainText() + '|'
             x = 1
             number = ''
             result = ''
             for i in range(len(text)):
-
-                if text[i].isdigit() is False and text[i] != '!':
+                if text[i].isdigit() is False and text[i] != '|':
                     while text[i+x].isdigit():
                         number += text[i+x]
                         x += 1

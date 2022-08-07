@@ -11,7 +11,7 @@ class EncodeDecode(QWidget):
         self.menu.setGeometry(50, 20, 150, 25)
         self.menu.addItem("---")
         self.menu.addItem("Run Length Encoding")
-        self.menu.addItem("Base64")
+        self.menu.addItem("Lempel-Ziv-Welch")
         self.menu.addItem("kp")
 
         self.menu.currentIndexChanged.connect(self.coding)
@@ -34,6 +34,10 @@ class EncodeDecode(QWidget):
         self.warning_run_length_encoding.setGeometry(210, 10, 250, 40)
         self.warning_run_length_encoding.hide()
 
+        self.warning_lempel_ziv_welch = QLabel("Warnung! Funktioniert nur für sehr\n lange Zeichenketten richtig!", self)
+        self.warning_lempel_ziv_welch.setGeometry(210, 10, 250, 40)
+        self.warning_lempel_ziv_welch.hide()
+
         self.decode_textbox = QTextEdit(self)
         self.decode_textbox.setGeometry(50, 280, 400, 100)
         self.decode_textbox.setPlaceholderText("Text einfügen, der entschlüsselt werden soll")
@@ -48,32 +52,67 @@ class EncodeDecode(QWidget):
         else:
             self.warning_run_length_encoding.hide()
 
+        if self.menu.currentText() == "Lempel-Ziv-Welch":
+            self.warning_lempel_ziv_welch.show()
+        else:
+            self.warning_lempel_ziv_welch.hide()
+
     def encode_text(self):
         if self.menu.currentText() == "Run Length Encoding":
-            text = self.encode_textbox.toPlainText() + '|'
-            counter = 1
-            result = ''
-            for i in range(len(text)):
-                if text[i] != '|' and text[i] != text[i+1]:
-                    result += text[i] + str(counter)
-                    counter = 1
-                elif text[i] != '|' and text[i] == text[i+1]:
-                    counter += 1
-            self.decode_textbox.setPlainText(result)
+            self.encode_run_length()
+        elif self.menu.currentText() == "Lempel-Ziv-Welch":
+            self.encode_lempel_ziv_welch()
 
     def decode_text(self):
         if self.menu.currentText() == "Run Length Encoding":
-            text = self.decode_textbox.toPlainText() + '|'
-            x = 1
-            number = ''
-            result = ''
-            for i in range(len(text)):
-                if text[i].isdigit() is False and text[i] != '|':
-                    while text[i+x].isdigit():
-                        number += text[i+x]
-                        x += 1
-                    x = 1
-                    result += text[i] * int(number)
-                    number = ''
-            self.encode_textbox.setPlainText(result)
+            self.decode_run_length()
+        elif self.menu.currentText() == "Lempel-Ziv-Welch":
+            self.decode_lempel_ziv_welch()
 
+    def encode_run_length(self):
+        text = self.encode_textbox.toPlainText() + '|'
+        counter = 1
+        result = ''
+        for i in range(len(text)):
+            if text[i] != '|' and text[i] != text[i+1]:
+                result += text[i] + str(counter)
+                counter = 1
+            elif text[i] != '|' and text[i] == text[i+1]:
+                counter += 1
+        self.decode_textbox.setPlainText(result)
+
+    def decode_run_length(self):
+        text = self.decode_textbox.toPlainText() + '|'
+        x = 1
+        number = ''
+        result = ''
+        for i in range(len(text)):
+            if text[i].isdigit() is False and text[i] != '|':
+                while text[i+x].isdigit():
+                    number += text[i+x]
+                    x += 1
+                x = 1
+                result += text[i] * int(number)
+                number = ''
+        self.encode_textbox.setPlainText(result)
+
+    def encode_lempel_ziv_welch(self):
+        text = self.encode_textbox.toPlainText()
+        pattern_list = []
+        result = ''
+        for i in range(len(text)):
+            if i+1 in range(len(text)):
+                next_sign = text[i+1]
+                combination = text[i] + next_sign
+                if combination in pattern_list:
+                    result += '<' + str(pattern_list.index(combination)) + '>'
+                    print(result)
+                else:
+                    pattern_list.append(combination)
+                    result += text[i]
+                    print(result)
+            print(pattern_list)
+
+    def decode_lempel_ziv_welch(self):
+        text = self.decode_textbox.toPlainText()
+        print(text)

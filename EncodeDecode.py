@@ -94,24 +94,43 @@ class EncodeDecode(QWidget):
                 x = 1
                 result += text[i] * int(number)
                 number = ''
+                if text[i+x].isdigit() is False:
+                    print("Falsches Format")
         self.encode_textbox.setPlainText(result)
 
     def encode_lempel_ziv_welch(self):
-        text = self.encode_textbox.toPlainText()
+        text = self.encode_textbox.toPlainText() + '|'
         pattern_list = []
         result = ''
-        for i in range(len(text)):
-            if i+1 in range(len(text)):
-                next_sign = text[i+1]
-                combination = text[i] + next_sign
-                if combination in pattern_list:
-                    result += '<' + str(pattern_list.index(combination)) + '>'
-                    print(result)
-                else:
-                    pattern_list.append(combination)
-                    result += text[i]
-                    print(result)
-            print(pattern_list)
+        # for i in range(len(text)):
+        #     if i+1 in range(len(text)):
+        #         next_sign = text[i+1]
+        #         combination = text[i] + next_sign
+        #         if combination in pattern_list:
+        #             result += '<' + str(pattern_list.index(combination)) + '>'
+        #             # if i+2 in range(len(text)):
+        #             #     pattern_list.append(combination+text[i+2])
+        #         else:
+        #             pattern_list.append(combination)
+        #             result += text[i]
+        #             #print(result)
+        #     print(result)
+        i = 0
+        counter = 1
+        while i+1 in range(len(text)):
+            next_sign = text[i+1]
+            combination = text[i] + next_sign
+            if combination in pattern_list:
+                result += '<' + str(pattern_list.index(combination)) + '>'
+                #counter += 1
+
+                #pattern_list.append(combination + text[i+counter])
+                i += 2
+            else:
+                pattern_list.append(combination)
+                result += text[i]
+                i += 1
+        self.decode_textbox.setPlainText(result)
 
     def decode_lempel_ziv_welch(self):
         text = self.decode_textbox.toPlainText()

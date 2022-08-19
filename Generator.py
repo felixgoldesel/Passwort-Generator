@@ -9,12 +9,26 @@ class Generator(QWidget):
     def __init__(self):
         super().__init__()
 
-        button_random = QPushButton("Random Passwort", self)
+        button_random = QPushButton("Zufälliges Passwort", self)
         button_random.setGeometry(70, 130, 120, 25)
         button_random.clicked.connect(self.random_pw)
 
         self.textbox_random = QTextEdit(self)
         self.textbox_random.setGeometry(300, 130, 150, 25)
+
+        button_word = QPushButton("Wortbasiert", self)
+        button_word.setGeometry(70, 205, 120, 25)
+        button_word.clicked.connect(self.word_pw)
+
+        self.textbox_word = QTextEdit(self)
+        self.textbox_word.setGeometry(300, 205, 150, 25)
+
+        self.checkbox_custom_word = QCheckBox(self)
+        self.checkbox_custom_word.setGeometry(230, 205, 120, 25)
+        self.checkbox_custom_word.stateChanged.connect(self.custom)
+
+        label_checkbox_word = QLabel("Custom", self)
+        label_checkbox_word.move(220, 235)
 
         button_safe = QPushButton("Sicheres Passwort", self)
         button_safe.setGeometry(70, 280, 120, 25)
@@ -23,9 +37,9 @@ class Generator(QWidget):
         self.textbox_safe = QTextEdit(self)
         self.textbox_safe.setGeometry(300, 280, 150, 25)
 
-        checkbox_custom = QCheckBox(self)
-        checkbox_custom.setGeometry(230, 280, 120, 25)
-        checkbox_custom.stateChanged.connect(self.custom)
+        self.checkbox_custom = QCheckBox(self)
+        self.checkbox_custom.setGeometry(230, 280, 120, 25)
+        self.checkbox_custom.stateChanged.connect(self.custom)
 
         label_checkbox = QLabel("Custom", self)
         label_checkbox.move(220, 310)
@@ -59,6 +73,10 @@ class Generator(QWidget):
 
     def custom(self, state):
         if QtCore.Qt.Checked == state:
+            if self.checkbox_custom_word.isChecked():
+                self.checkbox_custom.setCheckable(False)
+            if self.checkbox_custom.isChecked():
+                self.checkbox_custom_word.setCheckable(False)
             self.checkbox_upper_lower.show()
             self.label_upper_lower.show()
             self.checkbox_numbers.show()
@@ -66,6 +84,10 @@ class Generator(QWidget):
             self.checkbox_sign.show()
             self.label_sign.show()
         else:
+            if self.checkbox_custom_word.isChecked() is False:
+                self.checkbox_custom.setCheckable(True)
+            if self.checkbox_custom.isChecked() is False:
+                self.checkbox_custom_word.setCheckable(True)
             self.checkbox_upper_lower.hide()
             self.label_upper_lower.hide()
             self.checkbox_numbers.hide()
@@ -80,6 +102,9 @@ class Generator(QWidget):
             pw += random.choice(string.ascii_letters)
 
         self.textbox_random.setPlainText(pw)
+
+    def word_pw(self):
+        pass
 
     def safe_pw(self):
         pw_length = random.randint(8, 12)

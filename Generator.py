@@ -104,7 +104,12 @@ class Generator(QWidget):
         self.textbox_random.setPlainText(pw)
 
     def word_pw(self):
-        pass
+        #file_path = './sample.txt'
+
+        with open('./sample.txt') as file:
+            random_num = random.randint(1, 15)
+            content = file.readlines()
+            print(content[random_num])
 
     def safe_pw(self):
         pw_length = random.randint(8, 12)

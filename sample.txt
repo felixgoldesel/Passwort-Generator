@@ -1,0 +1,15 @@
+baum
+Adler
+teppich
+Teppich
+TV
+fernseher
+flasche
+gitarre
+Ukulele
+Stuhl
+tisch
+sofa
+kissen
+Lampe
+Schreibtisch

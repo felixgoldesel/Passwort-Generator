@@ -27,6 +27,6 @@ class Fenster(QTabWidget):
         self.tab2 = EncodeDecode()
 
         self.addTab(self.tab1, "Generator")
-        self.addTab(self.tab2, "Encoding/Decoding")
+        self.addTab(self.tab2, "Kodieren/Dekodieren")
 
         self.show()

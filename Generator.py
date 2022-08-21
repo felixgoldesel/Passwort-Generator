@@ -104,12 +104,29 @@ class Generator(QWidget):
         self.textbox_random.setPlainText(pw)
 
     def word_pw(self):
-        #file_path = './sample.txt'
-
-        with open('./sample.txt') as file:
-            random_num = random.randint(1, 15)
+        with open('./wordlist-german.txt', 'r', encoding='utf8') as file:
+            random_num = random.randint(1, 1908814)
             content = file.readlines()
-            print(content[random_num])
+            word = ''
+            added_sign = ''
+
+            if self.checkbox_upper_lower.isChecked():
+                while content[random_num][0].isupper() is False:
+                    random_num = random.randint(1, 1908814)
+                word += content[random_num]
+            else:
+                word += content[random_num]
+
+            if self.checkbox_numbers.isChecked():
+                added_num = random.randint(1, 99)
+                word += str(added_num)
+
+            if self.checkbox_sign.isChecked():
+                added_sign += string.punctuation
+                word += random.choice(added_sign)
+
+            word = word.replace('\n', '')
+            self.textbox_word.setPlainText(word)
 
     def safe_pw(self):
         pw_length = random.randint(8, 12)

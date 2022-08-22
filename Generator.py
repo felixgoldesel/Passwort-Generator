@@ -14,14 +14,14 @@ class Generator(QWidget):
         button_random.clicked.connect(self.random_pw)
 
         self.textbox_random = QTextEdit(self)
-        self.textbox_random.setGeometry(300, 130, 150, 25)
+        self.textbox_random.setGeometry(300, 130, 170, 25)
 
         button_word = QPushButton("Wortbasiert", self)
         button_word.setGeometry(70, 205, 120, 25)
         button_word.clicked.connect(self.word_pw)
 
         self.textbox_word = QTextEdit(self)
-        self.textbox_word.setGeometry(300, 205, 150, 25)
+        self.textbox_word.setGeometry(300, 205, 170, 25)
 
         self.checkbox_custom_word = QCheckBox(self)
         self.checkbox_custom_word.setGeometry(230, 205, 120, 25)
@@ -35,7 +35,7 @@ class Generator(QWidget):
         button_safe.clicked.connect(self.safe_pw)
 
         self.textbox_safe = QTextEdit(self)
-        self.textbox_safe.setGeometry(300, 280, 150, 25)
+        self.textbox_safe.setGeometry(300, 280, 170, 25)
 
         self.checkbox_custom = QCheckBox(self)
         self.checkbox_custom.setGeometry(230, 280, 120, 25)
